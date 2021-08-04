@@ -150,6 +150,10 @@ int stream_component_open(State *s, int stream_index) {
 				return FAILURE;
 			}
 
+			if(s->video_st->codec->pix_fmt==-1) {
+                		s->video_st->codec->pix_fmt=0;
+			}
+
 		    s->sws_ctx = sws_getContext(s->video_st->codec->width,
 		    		s->video_st->codec->height,
 		    		s->video_st->codec->pix_fmt,

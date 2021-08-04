@@ -367,24 +367,29 @@ public class FFmpegMediaMetadataRetriever
      *         can be null, if such a frame cannot be retrieved.
      */
     public Bitmap getFrameAtTime(long timeUs, int option) {
-        if (option < OPTION_PREVIOUS_SYNC ||
-            option > OPTION_CLOSEST) {
-            throw new IllegalArgumentException("Unsupported option: " + option);
-        }
+        byte[] picture = getFrameByteArrayAtTime(timeUs, option);
 
-    	Bitmap b = null;
-    	
+        Bitmap b = null;
+
         BitmapFactory.Options bitmapOptionsCache = new BitmapFactory.Options();
         //bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
         bitmapOptionsCache.inDither = false;
-    	
-        byte [] picture = _getFrameAtTime(timeUs, option);
-        
+
+
         if (picture != null) {
         	b = BitmapFactory.decodeByteArray(picture, 0, picture.length, bitmapOptionsCache);
         }
         
         return b;
+    }
+
+    public byte[] getFrameByteArrayAtTime(long timeUs, int option) {
+        if (option < OPTION_PREVIOUS_SYNC ||
+            option > OPTION_CLOSEST) {
+            throw new IllegalArgumentException("Unsupported option: " + option);
+        }
+        byte [] picture = _getFrameAtTime(timeUs, option);
+        return picture;
     }
 
     /**
@@ -413,8 +418,8 @@ public class FFmpegMediaMetadataRetriever
         BitmapFactory.Options bitmapOptionsCache = new BitmapFactory.Options();
         //bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
         bitmapOptionsCache.inDither = false;
-    	
-        byte [] picture = _getFrameAtTime(timeUs, OPTION_CLOSEST_SYNC);
+
+        byte[] picture = getFrameByteArrayAtTime(timeUs, OPTION_CLOSEST);
         
         if (picture != null) {
         	b = BitmapFactory.decodeByteArray(picture, 0, picture.length, bitmapOptionsCache);

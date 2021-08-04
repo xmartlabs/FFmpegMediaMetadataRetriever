@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: "com.vanniktech.maven.publish"
+//apply plugin: "com.vanniktech.maven.publish"
 
 buildscript {
     repositories {
@@ -11,12 +11,14 @@ buildscript {
     }
 
     dependencies {
-        classpath "gradle.plugin.com.vanniktech:gradle-maven-publish-plugin:0.8.0"
+//        classpath "gradle.plugin.com.vanniktech:gradle-maven-publish-plugin:0.8.0"
     }
 }
 
 android {
-    android.packageBuildConfig = false
+    buildFeatures {
+        buildConfig = false
+    }
 
     compileSdkVersion 29
 
